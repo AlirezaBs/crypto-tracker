@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>crypto tracker</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+      integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      .wave {
+        width: 5px;
+        height: 100px;
+        background: linear-gradient(45deg, #c02425, #f0cb35);
+        margin: 10px;
+        animation: wave 1s linear infinite;
+        border-radius: 20px;
+      }
+      .wave:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .wave:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+      .wave:nth-child(4) {
+        animation-delay: 0.3s;
+      }
+      .wave:nth-child(5) {
+        animation-delay: 0.4s;
+      }
+      .wave:nth-child(6) {
+        animation-delay: 0.5s;
+      }
+      .wave:nth-child(7) {
+        animation-delay: 0.6s;
+      }
+      .wave:nth-child(8) {
+        animation-delay: 0.7s;
+      }
+      .wave:nth-child(9) {
+        animation-delay: 0.8s;
+      }
+      .wave:nth-child(10) {
+        animation-delay: 0.9s;
+      }
+
+      @keyframes wave {
+        0% {
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(0);
+        }
+      }
+      @keyframes animation {
+        0% {
+          stroke-dasharray: 1 98;
+          stroke-dashoffset: -105;
+        }
+        50% {
+          stroke-dasharray: 80 10;
+          stroke-dashoffset: -160;
+        }
+        100% {
+          stroke-dasharray: 1 98;
+          stroke-dashoffset: -300;
+        }
+      }
+
+      #spinnerCircle {
+        transform-origin: center;
+        animation-name: animation;
+        animation-duration: 1.2s;
+        animation-timing-function: cubic-bezier;
+        animation-iteration-count: infinite;
+      }
+    </style>
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <nav class="flex flex-rowitems-center justify-between md:justify-evenly">
+      <div class="flex">
+        <a
+          class="text-black font-bold p-5 hover:bg-black hover:bg-opacity-5"
+          href="./index.html"
+          >Coins</a
+        >
+        <a
+          class="text-black p-5 hover:bg-black hover:bg-opacity-5"
+          href="https://github.com/AlirezaBs"
+          >GitHub</a
+        >
+      </div>
+
+      <div class="flex items-center">
+        <form>
+          <div class="relative">
+            <div
+              class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+            >
+              <svg
+                aria-hidden="true"
+                class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                ></path>
+              </svg>
+            </div>
+            <input
+              data-search-input
+              type="search"
+              id="search"
+              class="block px-4 py-2 pl-10 w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 focus:bg-white"
+              placeholder="Search"
+              required
+            />
+          </div>
+        </form>
+        <img
+          class="w-12 cursor-pointer ml-3"
+          src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=022"
+          title="crypto tracker by Alireza Babazadeh"
+          alt="crypto tracker"
+        />
+      </div>
+    </nav>
+
+    <section
+      id="table-section"
+      class="invisible w-full h-72 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400 overflow-visible"
+    >
+      <div
+        id="global-data"
+        class="flex flex-row pt-11 items-center justify-evenly"
+      >
+        <div
+          class="flex items-center space-y-3 md:space-y-0 md:space-x-3 md:flex-row flex-col text-sm md:text-lg justify-center"
+        >
+          <h1>Volume:</h1>
+          <h2 data-total-volume class="font-bold"></h2>
+        </div>
+        <div
+          class="flex items-center space-y-3 md:space-y-0 md:space-x-3 md:flex-row flex-col text-sm md:text-lg justify-center"
+        >
+          <h1>Avg Change:</h1>
+          <h2 data-avg-change class="font-bold"></h2>
+        </div>
+        <div
+          class="flex items-center space-y-3 md:space-y-0 md:space-x-3 md:flex-row flex-col text-sm md:text-lg justify-center"
+        >
+          <h1>Volume Changes:</h1>
+          <h2 data-volume-change class="font-bold"></h2>
+        </div>
+      </div>
+      <div class="absolute left-0 right-0 top-44 pb-24">
+        <table
+          class="md:w-4/5 w-full table-auto mx-auto rounded text-left bg-white overflow-hidden text-center"
+          style="box-shadow: 0px 2px 15px -3px rgba(0, 0, 0, 0.5)"
+        >
+          <thead>
+            <tr class="cursor-pointer rounded border-b-2">
+              <th class="font-medium p-2 w-1/12">Rank</th>
+              <th
+                class="text-left font-light p-2 w-7/12 text-gray-600 hover:text-black"
+              >
+                Name
+              </th>
+              <th class="font-light p-2 w-1/12 text-gray-600 hover:text-black">
+                Price (usd)
+              </th>
+              <th class="font-light p-2 w-1/12 text-gray-600 hover:text-black">
+                Changes (24H)
+              </th>
+              <th
+                class="font-light p-2 w-1/12 text-gray-600 hover:text-black hidden md:table-cell"
+              >
+                Changes (1H)
+              </th>
+              <th
+                class="font-light p-2 w-1/12 text-gray-600 hover:text-black hidden md:table-cell"
+              >
+                Changes (7D)
+              </th>
+              <th class="font-light p-2 w-1/12 text-gray-600 hover:text-black">
+                Favorite
+              </th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+        <div class="flex justify-center flex-col items-center w-full mt-5">
+          <div id="spinner2" class="w-10 h-10 mb-11 invisible">
+            <svg viewBox="0 0 100 100">
+              <defs>
+                <filter id="shadow">
+                  <feDropShadow
+                    dx="0"
+                    dy="0"
+                    stdDeviation="1.5"
+                    flood-color="#fc6767"
+                  />
+                </filter>
+              </defs>
+              <circle
+                id="spinnerCircle"
+                style="
+                  fill: transparent;
+                  stroke: #dd2476;
+                  stroke-width: 7px;
+                  stroke-linecap: round;
+                  filter: url(#shadow);
+                "
+                cx="50"
+                cy="50"
+                r="45"
+              />
+            </svg>
+          </div>
+          <button
+            class="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-blue-500 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200"
+          >
+            <span
+              data-load-more
+              class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0"
+            >
+              Load More
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div id="spinner">
+      <div class="center flex justify-center items-center bg-transparent">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+      </div>
+    </div>
+
+    <template id="coin-table-row">
+      <tr data-id class="hover:bg-gray-200">
+        <td data-rank class="p-2"></td>
+
+        <td class="text-left mt-2 flex flex-row items-center space-x-2">
+          <img data-image class="w-9 h-9 mt-2 cursor-pointer" src="" alt="" />
+          <div class="flex flex-col">
+            <p data-name class="text-sm"></p>
+            <p data-symbol class="text-sm font-bold"></p>
+          </div>
+        </td>
+
+        <td data-price class=""></td>
+        <td data-changes-24h class=""></td>
+        <td data-changes-1h class="hidden md:table-cell"></td>
+        <td data-changes-7d class="hidden md:table-cell"></td>
+        <td
+          data-add-favorite
+          class="fa-regular fa-star text-2xl text-yellow-400 mb-6 cursor-pointer"
+        ></td>
+      </tr>
+    </template>
+  </body>
+</html>
